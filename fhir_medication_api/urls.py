@@ -22,6 +22,7 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from medications.views import MedicationViewSet
+from graphene_django.views import GraphQLView
 
 router = routers.DefaultRouter()
 router.register(r'medications', MedicationViewSet)
@@ -29,4 +30,5 @@ router.register(r'medications', MedicationViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),  # 👈 Your REST API lives here!
+    path("graphql/", GraphQLView.as_view(graphiql=True)),  # 👈 Enables GraphiQL UI
 ]
