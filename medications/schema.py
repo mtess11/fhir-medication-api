@@ -12,11 +12,11 @@ class Query(graphene.ObjectType):
     medication = graphene.Field(MedicationType, id=graphene.Int())
 
     def resolve_medications(root, info):
-        return Medication.objects.all()
+        return Medication.objects.all()  # type: ignore[attr-defined]
 
     def resolve_medication(root, info, id):
         try:
-            return Medication.objects.get(pk=id)
+            return Medication.objects.get(pk=id)  # type: ignore[attr-defined]
         except ObjectDoesNotExist:
             return None
 
@@ -32,7 +32,7 @@ class CreateMedication(graphene.Mutation):
     def mutate(root, info, name, code, manufacturer=None):
         medication = Medication(name=name, code=code, manufacturer=manufacturer)
         medication.save()
-        return CreateMedication(medication=medication)
+        return CreateMedication(medication=medication)  # type: ignore[reportAttributeAccessIssue]
 
 class Mutation(graphene.ObjectType):
     create_medication = CreateMedication.Field()
